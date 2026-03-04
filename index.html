@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>موقعنا الممتع 💖</title>
+<style>
+body {
+    margin:0;
+    font-family: Arial, sans-serif;
+    text-align:center;
+    overflow-x:hidden;
+    transition: background 5s linear;
+}
+#login {
+    margin-top:100px;
+}
+input { padding: 10px; font-size:16px; }
+button { padding:10px 20px; font-size:16px; cursor:pointer; border:none; border-radius:10px; background-color:#ff66aa; color:white;}
+button:hover { background-color:#ff3388; }
+#content { display:none; padding:20px; }
+.heart,.star,.bubble { position:absolute; font-size: 30px; animation: float 2s ease-out; }
+@keyframes float { 0%{opacity:1; transform:translateY(0);} 100%{opacity:0; transform:translateY(-100px);} }
+
+/* ألبوم الصور */
+#gallery { display:flex; flex-wrap:wrap; justify-content:center; margin-top:20px; }
+#gallery img { width:150px; margin:10px; border-radius:15px; transition: transform 0.3s; cursor:pointer; }
+#gallery img:hover { transform: scale(1.3); }
+
+/* لعبة ممتعة */
+#game { margin-top:30px; }
+#question { font-size:18px; color:#993366; margin-bottom:10px; }
+.game-btn { margin:5px; padding:10px 20px; cursor:pointer; background-color:#ff66aa; border:none; color:white; border-radius:10px; }
+.game-btn:hover { background-color:#ff3388; }
+
+/* رسالة رومانسية */
+#loveMsg { margin-top:20px; font-size:20px; color:#cc0066; font-weight:bold; }
+</style>
+</head>
+<body>
+
+<div id="login">
+    <h1>أدخل كلمة السر للمتعة 💖</h1>
+    <input type="password" id="password" placeholder="كلمة السر">
+    <button onclick="checkPassword()">دخول</button>
+</div>
+
+<div id="content">
+    <h1>مرحبا بكما في عالمنا الممتع! 🎉</h1>
+    <p>اضغط في أي مكان لرؤية قلوب ونجوم وفقاعات 💖✨🌸</p>
+
+    <!-- موسيقى -->
+    <audio id="music" controls loop autoplay>
+        <source src="music.mp3" type="audio/mpeg">
+        متصفحك لا يدعم تشغيل الصوت
+    </audio>
+
+    <!-- ألبوم الصور -->
+    <div id="gallery">
+        <img src="photo1.jpg" alt="ذكرياتنا 1">
+        <img src="photo2.jpg" alt="ذكرياتنا 2">
+        <img src="photo3.jpg" alt="ذكرياتنا 3">
+        <img src="photo4.jpg" alt="ذكرياتنا 4">
+    </div>
+
+    <!-- لعبة ممتعة -->
+    <div id="game">
+        <p id="question">من يعرف الآخر أكثر؟ اختر الإجابة الصحيحة!</p>
+        <button class="game-btn" onclick="checkAnswer(this, 'A')">الإجابة أ</button>
+        <button class="game-btn" onclick="checkAnswer(this, 'B')">الإجابة ب</button>
+        <button class="game-btn" onclick="checkAnswer(this, 'C')">الإجابة ج</button>
+        <button class="game-btn" onclick="surprise()">مفاجأة 🎁</button>
+    </div>
+
+    <!-- رسائل رومانسية -->
+    <div id="loveMsg">💖 أحبك دائمًا 💖</div>
+</div>
+
+<script>
+// كلمة السر
+function checkPassword() {
+    const pass = document.getElementById('password').value;
+    if(pass === 'yahyahajar') {
+        document.getElementById('login').style.display='none';
+        document.getElementById('content').style.display='block';
+    } else { alert('كلمة السر خاطئة 😢'); }
+}
+
+// تأثيرات عند النقر
+document.body.addEventListener('click', function(e){
+    if(document.getElementById('content').style.display==='block'){
+        const rand=Math.random();
+        let el=document.createElement('div');
+        if(rand<0.4){el.className='heart'; el.innerHTML='💖';}
+        else if(rand<0.7){el.className='star'; el.innerHTML='✨';}
+        else{el.className='bubble'; el.innerHTML='🌸';}
+        el.style.left=e.pageX+'px';
+        el.style.top=e.pageY+'px';
+        document.body.appendChild(el);
+        setTimeout(()=>el.remove(),2000);
+    }
+});
+
+// لعبة أسئلة
+function checkAnswer(btn, answer){
+    alert('لقد اخترت: '+answer+' 🎉');
+}
+
+// مفاجآت
+function surprise(){
+    alert('🎁 مفاجأة: أحبك أكثر من أي وقت مضى! 💖');
+}
+
+// رسائل رومانسية متغيرة
+const messages = [
+    '💖 أحبك دائمًا 💖',
+    '🌸 أنت نجم حياتي 🌸',
+    '✨ معك كل يوم أجمل ✨',
+    '💕 لا شيء أجمل منك 💕'
+];
+let msgIndex=0;
+setInterval(()=>{
+    document.getElementById('loveMsg').innerText = messages[msgIndex];
+    msgIndex=(msgIndex+1)%messages.length;
+},5000);
+
+// خلفية متغيرة تدريجيًا
+let hue=0;
+setInterval(()=>{
+    document.body.style.background=`hsl(${hue},50%,90%)`;
+    hue=(hue+1)%360;
+},100);
+</script>
+
+</body>
+</html>
